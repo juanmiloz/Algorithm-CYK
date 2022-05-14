@@ -16,8 +16,8 @@ $(document).ready(function() {
 
     $('#submitInputG').click(function(){
         var input = $('#inputG').val();
-        var test = input.split(";");
-        console.log(test);
+        var products = input.split(";");
+        //getProductsValues(products);
     });
 });
 
@@ -58,3 +58,10 @@ function cambiarVista(objetivo){
         }
     );
 }
+
+/*function getProductsValues(products){
+    for(let i = 0; i < products.length(); i++){
+        let temp = products[i].split(':');
+
+    }
+}*/
