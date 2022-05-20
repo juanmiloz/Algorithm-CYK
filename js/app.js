@@ -6,12 +6,12 @@ var prods = {};
 
 $(document).ready(function() {
     
-    cambiarVista('grammarInput');
+    changeView('grammarInput');
 
     $('#submitInputW').click(function() {
         var input = $("#inputW").val();
-        generarTabla(input);
-        cambiarVista('matriz');
+        createTable(input);
+        changeView('matriz');
     });
 
     $('#submitInputG').click(function(){
@@ -21,7 +21,7 @@ $(document).ready(function() {
     });
 });
 
-function generarTabla(input){
+function createTable(input){
     var tableSize = input.length;
     console.log(tableSize);
     $('#containerMatriz').html('');
@@ -48,7 +48,7 @@ function generarTabla(input){
     $('#containerMatriz').html(table);
 }
 
-function cambiarVista(objetivo){
+function changeView(objetivo){
     $(".view").hide();
     $(".view").each(
         function() {
