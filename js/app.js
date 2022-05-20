@@ -1,7 +1,6 @@
-var grammar = {
-    productions:prods
-}
+//import {Grammar} from "./grammar";
 
+var grammar;
 var prods = {};
 
 $(document).ready(function() {
@@ -16,11 +15,16 @@ $(document).ready(function() {
 
     $('#submitInputG').click(function(){
         var input = $('#inputG').val();
-        var products = input.split(";");
-        //getProductsValues(products);
+        getProductsValues(input);
+        //grammar = new Grammar(prods);
+        //console.log(grammar);
     });
 });
 
+/**
+ * This method allows you to create the html which will form the matrix.
+ * @param {String} input Its the String w, which will be checked if it belongs to the current grammar.
+ */
 function createTable(input){
     var tableSize = input.length;
     console.log(tableSize);
@@ -48,6 +52,10 @@ function createTable(input){
     $('#containerMatriz').html(table);
 }
 
+/**
+ * This method allows you to change the currently displayed screen.
+ * @param {String} objetivo Contains the name of the screen to which you want to change to. 
+ */
 function changeView(objetivo){
     $(".view").hide();
     $(".view").each(
@@ -59,9 +67,18 @@ function changeView(objetivo){
     );
 }
 
-/*function getProductsValues(products){
-    for(let i = 0; i < products.length(); i++){
-        let temp = products[i].split(':');
-
+/**
+ * This method makes it possible to obtain the productions entered in the 
+ * correct structure from the delivered string.
+ * @param {String} input its a grammar in a string
+ */
+function getProductsValues(input){
+    var listProductions = input.split(",");
+    for(let i = 0; i < listProductions.length; i++){
+        let tempList = listProductions[i].split(":");
+        let nonTerminal = tempList[0];
+        let productionsNonTerminal = tempList[1].split("|");
+        
+        prods[nonTerminal] = productionsNonTerminal;
     }
-}*/
+}
