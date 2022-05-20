@@ -1,10 +1,7 @@
-var grammar = {
-    productions:prods
-}
-
-var prods = {};
+import {Grammar} from "./grammar";
 
 $(document).ready(function() {
+    var grammar = new Grammar(null);
     
     changeView('grammarInput');
 
