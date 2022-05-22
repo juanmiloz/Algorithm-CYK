@@ -5,11 +5,12 @@ export class Grammar{
 
     //CYK algorithm
     wordBelongs(word){
-        var belongs = true;
+        var belongs = false;
         var cykMatrix = [];
         fillCykMatrix(word, cykMatrix);
         initializeCykMatrix(cykMatrix, word);
         loopCykMatrix(cykMatrix, word);
+        belongs = cykMatrix[1][word.length - 1].includes('S');
         return belongs
     }
 
