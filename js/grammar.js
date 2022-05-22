@@ -7,9 +7,9 @@ export class Grammar{
     wordBelongs(word){
         var belongs = false;
         var cykMatrix = [];
-        fillCykMatrix(word, cykMatrix);
-        initializeCykMatrix(cykMatrix, word);
-        loopCykMatrix(cykMatrix, word);
+        this.fillCykMatrix(word, cykMatrix);
+        this.initializeCykMatrix(cykMatrix, word);
+        this.loopCykMatrix(cykMatrix, word);
         belongs = cykMatrix[1][word.length - 1].includes('S');
         return belongs
     }
@@ -26,10 +26,10 @@ export class Grammar{
 
     //Initialize the first column of the matrix
     initializeCykMatrix(cykMatrix, word){
-        var firstColumn = 1;
+        var firstColumn = 0;
         for (let i = 0; i < word.length; i++) {
             let terminal = word.charAt(i);
-            let setPossibleProds = getPossibleProds(terminal);
+            let setPossibleProds = this.getPossibleProds(terminal);
             cykMatrix[i][firstColumn] = setPossibleProds;
         }
     }
@@ -37,8 +37,8 @@ export class Grammar{
     //Gets the set of possible NON terminals that produces a specified production
     getPossibleProds(production){
         var set = [];
-        for (var key in prods) {
-            var currentProds = prods[key];
+        for (var key in this.productions) {
+            var currentProds = this.productions[key];
             if(currentProds.includes(production)){
                 set.push(key);
             }
@@ -58,13 +58,13 @@ export class Grammar{
                     var c = cykMatrix[i + k][j - k];
 
                     //Creates the possible combinations of BC
-                    var binaryProductions = createBinaryProds(b, c);
+                    var binaryProductions = this.createBinaryProds(b, c);
                     var setPossibleProds = []
 
                     //For each BC production find if it is produced by the grammar
                     for (var prod in binaryProductions) {
-                        var temp = getPossibleProds(prod);
-                        addValuesSet(setPossibleProds, temp);
+                        var temp = this.getPossibleProds(prod);
+                        this.addValuesSet(setPossibleProds, temp);
                     }
                     
                     cykMatrix[i][j].push(...setPossibleProds);
