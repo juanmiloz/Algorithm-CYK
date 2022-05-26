@@ -1,9 +1,13 @@
-import {Grammar} from "./grammar";
+var prods = {};
 
 $(document).ready(function() {
-    var grammar = new Grammar(null);
-    
-    changeView('grammarInput');
+    //var grammar = new Grammar(null);
+
+    changeView('menu');
+
+    $('#initializeBtn').click(function() {
+        changeView('grammarInput');
+    })
 
     $('#submitInputW').click(function() {
         var input = $("#inputW").val();
@@ -14,6 +18,7 @@ $(document).ready(function() {
     $('#submitInputG').click(function(){
         var input = $('#inputG').val();
         getProductsValues(input);
+        console.log(prods);
         //grammar = new Grammar(prods);
         //console.log(grammar);
     });
