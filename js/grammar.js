@@ -1,4 +1,4 @@
-export class Grammar{
+class Grammar{
     constructor(productions){
         this.productions = productions;
     }
@@ -10,7 +10,7 @@ export class Grammar{
         this.fillCykMatrix(word, cykMatrix);
         this.initializeCykMatrix(cykMatrix, word);
         this.loopCykMatrix(cykMatrix, word);
-        belongs = cykMatrix[1][word.length - 1].includes('S');
+        belongs = cykMatrix[0][word.length - 1].includes('S');
         return belongs
     }
 
@@ -43,19 +43,18 @@ export class Grammar{
                 set.push(key);
             }
         }
-
         return set;
     }
 
     //Loops the matrix according to CYK algorithm
     loopCykMatrix(cykMatrix, word){
         for (let j = 1; j < word.length; j++) {
-            for (let i = 0; i < word.length - j + 1; i++) {
-                for (let k = 0; k < j - 1; k++) {
-                    
+            for (let i = 0; i < word.length - j; i++) {
+                for (let k = 0; k < j; k++) {
+
                     //B and C are lists of non terminal variables
                     var b = cykMatrix[i][k];
-                    var c = cykMatrix[i + k][j - k];
+                    var c = cykMatrix[i + (k + 1)][j - (k+1)];
 
                     //Creates the possible combinations of BC
                     var binaryProductions = this.createBinaryProds(b, c);
@@ -63,11 +62,15 @@ export class Grammar{
 
                     //For each BC production find if it is produced by the grammar
                     for (var prod in binaryProductions) {
-                        var temp = this.getPossibleProds(prod);
+                        var temp = this.getPossibleProds(binaryProductions[prod]);
                         this.addValuesSet(setPossibleProds, temp);
                     }
+
+                    if(cykMatrix[i][j] == undefined){
+                        cykMatrix[i][j] = [];
+                    }
                     
-                    cykMatrix[i][j].push(...setPossibleProds);
+                    this.addValuesSet(cykMatrix[i][j], setPossibleProds);
                 }
             }
             
@@ -95,8 +98,8 @@ export class Grammar{
     //Adds a list of new values to a set. If a value already exists it's ignored
     addValuesSet(set, newValues){
         for (var value in newValues) {
-            if (!set.includes(value)) {
-                set.push(value);
+            if (!set.includes(newValues[value])) {
+                set.push(newValues[value]);
             }
         }
     }
