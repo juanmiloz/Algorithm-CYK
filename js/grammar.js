@@ -11,7 +11,13 @@ class Grammar{
         this.initializeCykMatrix(cykMatrix, word);
         this.loopCykMatrix(cykMatrix, word);
         belongs = cykMatrix[0][word.length - 1].includes('S');
-        return belongs
+        
+        var output = {
+            belong : belongs,
+            matrix : cykMatrix
+        }
+
+        return output;
     }
 
     //Fills the triangle matrix with null values

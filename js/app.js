@@ -3,7 +3,8 @@ var prods = {};
 $(document).ready(function() {
     //var grammar = new Grammar(null);
 
-    changeView('menu');
+    changeResult('falseBelong');
+    changeView('stringInput');
 
     $('#initializeBtn').click(function() {
         changeView('grammarInput');
@@ -11,6 +12,7 @@ $(document).ready(function() {
 
     $('#submitInputW').click(function() {
         var input = $("#inputW").val();
+        var answer = grammar.wordBelongs(input);
         createTable(input);
         changeView('matriz');
     });
@@ -33,7 +35,7 @@ function createTable(input){
     console.log(tableSize);
     $('#containerMatriz').html('');
 
-    var table = "<table class='table table-bordered'>";
+    var table = "<table class='table table-dark'>";
 
     for (var i = 0; i <= tableSize; i++){
         table += "<tr>";
@@ -41,7 +43,7 @@ function createTable(input){
             if(j==0 && i == 0){
                 table += "<td></td>";
             }else if(i == 0 && j > 0){
-                table += "<td>j= "+j+" /<b>"+input.charAt(j-1)+"</b></td>";
+                table += "<td>j= "+j+" /<b> "+input.charAt(j-1)+"</b></td>";
             }else if(j == 0 && i > 0){
                 table += "<td>i= "+i+" /<b>"+input.charAt(i-1)+"</b></td>";
             }else if(i <= (tableSize-(j-1))){
@@ -62,6 +64,17 @@ function createTable(input){
 function changeView(objetivo){
     $(".view").hide();
     $(".view").each(
+        function() {
+            if($(this).attr("id") == objetivo){
+                $(this).show();
+            }
+        }
+    );
+}
+
+function changeResult(objetivo){
+    $(".answer").hide();
+    $(".answer").each(
         function() {
             if($(this).attr("id") == objetivo){
                 $(this).show();
