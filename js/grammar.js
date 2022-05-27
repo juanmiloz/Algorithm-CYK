@@ -53,6 +53,7 @@ class Grammar{
     }
 
     //Loops the matrix according to CYK algorithm
+    //not working yet
     loopCykMatrix(cykMatrix, word){
         for (let j = 1; j < word.length; j++) {
             for (let i = 0; i < word.length - j; i++) {
@@ -61,7 +62,7 @@ class Grammar{
                     //B and C are lists of non terminal variables
                     var b = cykMatrix[i][k];
                     var c = cykMatrix[i + (k + 1)][j - (k+1)];
-
+                    
                     //Creates the possible combinations of BC
                     var binaryProductions = this.createBinaryProds(b, c);
                     var setPossibleProds = []
@@ -71,11 +72,9 @@ class Grammar{
                         var temp = this.getPossibleProds(binaryProductions[prod]);
                         this.addValuesSet(setPossibleProds, temp);
                     }
-
                     if(cykMatrix[i][j] == undefined){
                         cykMatrix[i][j] = [];
                     }
-                    
                     this.addValuesSet(cykMatrix[i][j], setPossibleProds);
                 }
             }

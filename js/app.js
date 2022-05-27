@@ -1,4 +1,5 @@
 var prods = {};
+var grammar;
 
 $(document).ready(function() {
     //var grammar = new Grammar(null);
@@ -11,17 +12,25 @@ $(document).ready(function() {
 
     $('#submitInputW').click(function() {
         var input = $("#inputW").val();
-        var answer = grammar.wordBelongs(input);
-        createTable(input);
-        changeView('matriz');
+        var output = grammar.wordBelongs(input);
+        console.log(output);
+        changeView('resultView');
+        if(output.belong){
+            changeResult("trueBelong");
+        }else{
+            changeResult("falseBelong");
+        }
+        
     });
 
     $('#submitInputG').click(function(){
         var input = $('#inputG').val();
         getProductsValues(input);
         console.log(prods);
-        //grammar = new Grammar(prods);
-        //console.log(grammar);
+        grammar = new Grammar(prods);
+        console.log(grammar);
+        changeView('stringInput');
+        
     });
 });
 
@@ -85,6 +94,7 @@ function changeResult(objetivo){
 /**
  * This method makes it possible to obtain the productions entered in the 
  * correct structure from the delivered string.
+ * S:AB|BC, A: BA|a, B: CC|b, C: AB|a
  * @param {String} input its a grammar in a string
  */
 function getProductsValues(input){
