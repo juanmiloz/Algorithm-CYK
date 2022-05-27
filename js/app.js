@@ -3,8 +3,7 @@ var prods = {};
 $(document).ready(function() {
     //var grammar = new Grammar(null);
 
-    changeResult('falseBelong');
-    changeView('stringInput');
+    changeView('menu');
 
     $('#initializeBtn').click(function() {
         changeView('grammarInput');
