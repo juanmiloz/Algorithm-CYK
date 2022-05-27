@@ -11,23 +11,28 @@ $(document).ready(function() {
     $('#submitInputW').click(function() {
         var input = $("#inputW").val();
         var output = grammar.wordBelongs(input);
-        console.log(output);
-        changeView('resultView');
+        //console.log(output);
         if(output.belong){
             changeResult("trueBelong");
         }else{
             changeResult("falseBelong");
         }
-        
+        console.log(output.matrix);
+        createTable(input,output.matrix);
+        changeView('matriz');
     });
 
     $('#submitInputG').click(function(){
         var input = $('#inputG').val();
         getProductsValues(input);
-        console.log(prods);
+        //console.log(prods);
         grammar = new Grammar(prods);
-        console.log(grammar);
+        //console.log(grammar);
         changeView('stringInput');
+    });
+
+    $('#changeResultView').click(function(){
+        changeView('resultView');
     });
 
     $('#returnMenu').click(function(){
@@ -38,7 +43,6 @@ $(document).ready(function() {
     $('#returnInputW').click(function(){
         changeView('stringInput');
     });
-
 });
 
 /**
@@ -62,7 +66,7 @@ function createTable(input, matriz){
             }else if(j == 0 && i > 0){
                 table += "<td>i= "+i+" /<b>"+input.charAt(i-1)+"</b></td>";
             }else if(i <= (tableSize-(j-1))){
-                table += "<td>"+ matriz[i][j]+"</td>";
+                table += "<td>{"+ matriz[i-1][j-1]+"}</td>";
             }
         }
         table += "</tr>"
