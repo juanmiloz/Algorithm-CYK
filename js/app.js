@@ -2,8 +2,6 @@ var prods = {};
 var grammar;
 
 $(document).ready(function() {
-    //var grammar = new Grammar(null);
-
     changeView('menu');
 
     $('#initializeBtn').click(function() {
@@ -30,15 +28,24 @@ $(document).ready(function() {
         grammar = new Grammar(prods);
         console.log(grammar);
         changeView('stringInput');
-        
     });
+
+    $('#returnMenu').click(function(){
+        grammar = null;
+        changeView('menu');
+    });
+
+    $('#returnInputW').click(function(){
+        changeView('stringInput');
+    });
+
 });
 
 /**
  * This method allows you to create the html which will form the matrix.
  * @param {String} input Its the String w, which will be checked if it belongs to the current grammar.
  */
-function createTable(input){
+function createTable(input, matriz){
     var tableSize = input.length;
     console.log(tableSize);
     $('#containerMatriz').html('');
@@ -55,7 +62,7 @@ function createTable(input){
             }else if(j == 0 && i > 0){
                 table += "<td>i= "+i+" /<b>"+input.charAt(i-1)+"</b></td>";
             }else if(i <= (tableSize-(j-1))){
-                table += "<td>CYK</td>";
+                table += "<td>"+ matriz[i][j]+"</td>";
             }
         }
         table += "</tr>"
@@ -94,7 +101,7 @@ function changeResult(objetivo){
 /**
  * This method makes it possible to obtain the productions entered in the 
  * correct structure from the delivered string.
- * S:AB|BC, A: BA|a, B: CC|b, C: AB|a
+ * S:AB|BC,A:BA|a,B:CC|b,C:AB|a
  * @param {String} input its a grammar in a string
  */
 function getProductsValues(input){
